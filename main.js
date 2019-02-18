@@ -495,7 +495,9 @@ class MiniGraphCard extends LitElement {
       this.entity.forEach((entity, i) => {
         if (!entity || this.Graph[i].coords.length === 0) return;
         [this.Graph[i].min, this.Graph[i].max] = [this.bound[0], this.bound[1]];
-        if (config.show.graph === 'line') {
+        if (config.show.graph === 'bar') {
+          this.bar[i] = this.Graph[i].getBars(i, config.entities.length);
+        } else {
           this.line[i] = this.Graph[i].getPath();
           if (config.show.fill)
             this.fill[i] = this.Graph[i].getFill(this.line[i]);
@@ -507,8 +509,6 @@ class MiniGraphCard extends LitElement {
               config.entities[i].color || config.line_color[i] || config.line_color[0],
             );
         }
-        if (config.show.graph === 'bar')
-          this.bar[i] = this.Graph[i].getBars(i, config.entities.length);
       });
       this.line = [...this.line];
     }
